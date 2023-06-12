@@ -49,18 +49,18 @@
       <div class="comment-container">
         <div>
           <h6 class="nama_commentator pt-2">
-            {{$comment->name}}<small
+            {{$comment->commentator_name}}<small
               class="px-2 text-muted fs-6 fw-light display-6"
               >{{date('D H:i', strtotime($comment->created_at))}}</small
             >
           </h6>
-          <p class="comment_commentator">{!!$comment->content!!}</p>
+          <p class="comment_commentator">{!!$comment->comment!!}</p>
         </div>
-        @if (Auth::check() && (Auth::user()->name == $comment->name ||
+        @if (Auth::check() && (Auth::user()->name == $comment->commentator_name ||
         $post->author == Auth::user()->name))
         <form
           method="post"
-          action="{{ route('comments.destroy', $comment->id) }}"
+          action="{{ route('comment.delete', $comment) }}"
         >
           @method('DELETE') @csrf
           <button type="submit" class="btn btn-sm btn-danger">-</button>
@@ -78,19 +78,19 @@
   <div class="my-4 pb-5">
     <h6>Add a Comment</h6>
     <form
-      action="{{ route('comments.store') }}"
+      action="{{ route('comment.create') }}"
       method="POST"
       enctype="multipart/form-data"
     >
       @method('POST') @csrf
       <input type="hidden" name="post_id" value="{{ $post->id }}" />
-      <input type="hidden" name="slug" value="{{ $post->slug }}" />
+      <input type="hidden" name="commentator_id" value="{{ Auth::user()->id }}" />
       <div class="form-group">
         <input
           type="hidden"
           class="form-control"
           id="name"
-          name="name"
+          name="commentator_name"
           value="{{Auth::user()->name}}"
         />
       </div>
@@ -98,11 +98,11 @@
         <textarea
           class="form-control rounded-1"
           id="content"
-          name="content"
+          name="comment"
           rows="2"
           placeholder="Type your comment..."
         >
-{!! old('content') !!}</textarea
+{!! old('comment') !!}</textarea
         >
       </div>
       <button
