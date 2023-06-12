@@ -1,11 +1,13 @@
-@extends('layouts.app') @section('title', "$post->title") @section('content')
+@extends('layouts.template') 
+@section('title', "$post->title") 
+@section('content')
 <div class="container">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <i class="fa-solid fa-home me-1"></i
         ><a
-          href="{{route('index')}}"
+          href="{{route('posts.index')}}"
           class="text-decoration-none text-muted fw-semibold"
           >Home</a
         >
@@ -28,7 +30,7 @@
     @if ($post->image)
     <div class="my-4 rounded-2">
       <img
-        src="{{ url('storage/images/' . $post->image) }}"
+        src="{{ url('storage/img/' . $post->image) }}"
         alt="Post Image"
         class="img-fluid rounded-3 shadow-lg"
         width="60%"
@@ -42,8 +44,8 @@
   <div class="my-4">
     <h5>Comments ({{$post->comments->count()}})</h5>
     <div class="comment pt-2">
-      @if ($post->comments->count() > 0) @foreach ($post->comments->reverse() as
-      $comment)
+      @if ($post->comments->count() > 0) 
+      @foreach ($post->comments->reverse() as $comment)
       <div class="comment-container">
         <div>
           <h6 class="nama_commentator pt-2">
@@ -65,7 +67,8 @@
         </form>
         @endif
       </div>
-      @endforeach @else
+      @endforeach 
+      @else
       <p class="text-muted">No comments yet.</p>
       @endif
     </div>
