@@ -1,7 +1,7 @@
-@extends('layouts.app') @section('title', "Buat Postingan") @section('content')
+@extends('layouts.template') @section('title', "Buat Postingan") @section('content')
 <div class="container my-3">
   <h2 class="title">Buat Posting Baru</h2>
-  <form method="POST" action="{{ url('posts') }}" enctype="multipart/form-data">
+  <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
     @csrf
     <label for="title" class="form-label">Judul Postingan</label>
     <input type="text" class="form-control" id="title" name="title" required />
@@ -24,7 +24,7 @@
       Save
     </button>
     <button type="submit" name="save" class="btn btn-dark mt-2 mb-5">
-      <a class="text-decoration-none text-light" href="{{ url('posts') }}"
+      <a class="text-decoration-none text-light" href="{{ route('posts.index') }}"
         >Back</a
       >
     </button>
