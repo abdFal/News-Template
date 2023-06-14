@@ -1,8 +1,9 @@
-@extends('layouts.app') @section('title', "Edit Post: $post->title")
+@extends('layouts.template') 
+@section('title', "Edit Post: {{$post->title}}")
 @section('content')
 <div class="container">
   <h2 class="title">Edit Post</h2>
-  <form method="POST">
+  <form method="POST" action="{{ route('posts.update', $post->id) }}">
     @method('PATCH') @csrf
     <label for="title" class="form-label">Judul Postingan</label>
     <input
@@ -35,7 +36,7 @@
       Save
     </button>
     <button type="submit" name="back" class="btn btn-dark my-2">
-      <a class="text-decoration-none text-light" href="{{ url('posts') }}"
+      <a class="text-decoration-none text-light" href="{{ route('posts.index') }}"
         >Back</a
       >
     </button>
@@ -72,7 +73,7 @@
         <span class="fw-bold">{{$post->title}}</span>
       </div>
       <div class="modal-footer">
-        <form method="post">
+        <form method="post" action="{{ route('posts.destroy', $post->id) }}">
           @method('DELETE') @csrf
           <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
