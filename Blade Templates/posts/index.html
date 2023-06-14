@@ -1,8 +1,8 @@
-@extends('layouts.app') @section('title', "Beranda") @section('content')
+@extends('layouts.template') @section('title', "Beranda") @section('content')
 
 <style>
   .header {
-    background-image: url("{{ asset("img/hohyeong-lee-e0uCDHd19U4-unsplash.jpg") }}");
+    background-image: url("{{ asset("img/anete-lusina-zwsHjakE_iI-unsplash.jpg") }}");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -29,14 +29,16 @@
 </style>
 
 <div class="header">
-  <h1>Blog Ku</h1>
+  <h1>News Ku</h1>
   <p>Find Out of The Worldwide!</p>
   <div class="text-light">
     <h6 class="border border-light bg-dark bg-opacity-75 px-2 py-3 rounded-2">
-      {{ $active_post_count }} posts active
+      {{ $active }} posts active
       <i class="fa-solid fa-check-to-slot text-primary"></i>
-      {{ $trashed_post_count }} posts deleted
-      <i class="fa-solid fa-trash text-danger"></i>
+    </h6>
+    <h6 class="border border-danger bg-dark bg-opacity-75 px-2 py-3 rounded-2">
+      <a class="text-decoration-none text-danger" href="{{route('posts.trash')}}">{{ $deleted }} posts deleted</a>
+      <i class="fa-solid fa-check-to-slot text-danger"></i>
     </h6>
   </div>
 </div>
@@ -48,7 +50,7 @@
       <li class="breadcrumb-item">
         <i class="fa-solid fa-home me-1"></i
         ><a
-          href="{{route('index')}}"
+          href="{{route('posts.index')}}"
           class="text-decoration-none text-muted fw-semibold"
           >Home</a
         >
@@ -63,7 +65,7 @@
   <div class="card-body">
     <h5 class="card-title">
       {{ $post->title }}<small class="px-2 text-muted fs-6 fw-light display-6"
-        >{{$post->author}}</small
+        >{{$post->writer['name']}}</small
       >
     </h5>
     <hr />
@@ -79,11 +81,11 @@
     </small>
   </div>
   <div class="button d-flex">
-    <a href="{{ url('posts/' . $post->slug) }}" class="btn btn-outline-dark"
+    <a href="{{ route('posts.show', $post) }}" class="btn btn-outline-dark"
       >View More</a
     >
     <a
-      href="{{ url('posts/' . $post->slug . '/edit') }}"
+      href="{{ route("posts.edit", $post) }}"
       class="btn btn-outline-primary"
       >Edit Post</a
     >
@@ -92,12 +94,9 @@
 @endforeach
 <div class="p d-flex justify-content-end mb-5 pb-2">
   <a
-    href="{{ url('posts/create')}}"
+    href="{{ route('posts.create')}}"
     class="btn btn-plus btn-lg btn-primary mt-2 mb-3"
     >+ Buat Post</a
-  >
-  <a href="{{ url('posts/trash')}}" class="btn btn-lg btn-danger mt-2 mb-3"
-    >Sampah ({{ $trashed_post_count }})</a
   >
 </div>
 
